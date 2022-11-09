@@ -3,7 +3,7 @@ import styled from "styled-components";
 import EnemyField from "./EnemyField";
 import SelectButton from "./SelectButton";
 import UserField from "./UserField";
-import { ROCK_IMG, PAPER_IMG, SCISSORS_IMG, DEFAULT_IMG } from "../../constants/constants";
+import { ROCK_IMG, PAPER_IMG, SCISSORS_IMG } from "../../constants/constants";
 import Result from "./Result";
 import ScoreBoard from "./ScoreBoard";
 import Conditions from "./Conditions";
@@ -111,7 +111,6 @@ const BattleField = () => {
 
   function victoryConditions() {
     if (playerScore === 3) {
-      console.log("Player가 승리했습니다.");
       setConditions("Player가 승리했습니다.");
       setPopUp(true);
     }
@@ -119,7 +118,6 @@ const BattleField = () => {
 
   function loseConditions() {
     if (enemyScore === 3) {
-      console.log("Player가 패배했습니다.");
       setConditions("Player가 패배했습니다.");
       setPopUp(true);
     }
@@ -127,17 +125,8 @@ const BattleField = () => {
 
   // 이벤트 핸들러
 
-  function clickScissors() {
-    setPlayerSelect(0);
-    setEnemySelect(parseInt(Math.random() * 1000) % 3);
-  }
-  function clickRock() {
-    setPlayerSelect(1);
-    setEnemySelect(parseInt(Math.random() * 1000) % 3);
-  }
-
-  function clickPaper() {
-    setPlayerSelect(2);
+  function clickHandler(type) {
+    setPlayerSelect(type);
     setEnemySelect(parseInt(Math.random() * 1000) % 3);
   }
 
@@ -183,9 +172,9 @@ const BattleField = () => {
           <EnemyField enemySelect={enemySelect} />
         </BattleArea>
         <SelectArea>
-          <SelectButton onClick={clickScissors} img={SCISSORS_IMG} />
-          <SelectButton onClick={clickRock} img={ROCK_IMG} />
-          <SelectButton onClick={clickPaper} img={PAPER_IMG} />
+          <SelectButton onClick={() => clickHandler(0)} img={SCISSORS_IMG} />
+          <SelectButton onClick={() => clickHandler(1)} img={ROCK_IMG} />
+          <SelectButton onClick={() => clickHandler(2)} img={PAPER_IMG} />
         </SelectArea>
         {popUp ? <AllScreen /> : null}
         {popUp ? <Conditions conditions={conditions} clickExitBtn={clickExitBtn} /> : null}

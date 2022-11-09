@@ -6,11 +6,13 @@ import UserField from "./UserField";
 import { ROCK_IMG, PAPER_IMG, SCISSORS_IMG, DEFAULT_IMG } from "../../constants/constants";
 import Result from "./Result";
 import ScoreBoard from "./ScoreBoard";
+import Conditions from "./Conditions";
 
 const BattleField = () => {
   // styled-components
 
   const BattleFieldComponent = styled.div`
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -59,6 +61,8 @@ const BattleField = () => {
   const [result, setResult] = useState("안내면 진다!");
   const [playerScore, setPlayerScore] = useState(0);
   const [enemyScore, setEnemyScore] = useState(0);
+  const [conditions, setConditions] = useState("");
+  const [popUp, setPopUp] = useState(false);
 
   // 이벤트 설정
 
@@ -96,6 +100,24 @@ const BattleField = () => {
     }
   }
 
+  // 승리 조건 함수
+
+  function victoryConditions() {
+    if (playerScore === 3) {
+      console.log("Player가 승리했습니다.");
+      setConditions("Player가 승리했습니다.");
+      setPopUp(true);
+    }
+  }
+
+  function loseConditions() {
+    if (enemyScore === 3) {
+      console.log("Player가 패배했습니다.");
+      setConditions("Player가 패배했습니다.");
+      setPopUp(true);
+    }
+  }
+
   // 이벤트 핸들러
 
   function clickScissors() {
@@ -112,6 +134,14 @@ const BattleField = () => {
     setRandomNumber(parseInt(Math.random() * 1000) % 3);
   }
 
+  function clickExitBtn() {
+    setSelectCase(3);
+    setRandomNumber(3);
+    setPopUp(false);
+    setPlayerScore(0);
+    setEnemyScore(0);
+  }
+
   // useEffect
 
   useEffect(() => {
@@ -122,26 +152,37 @@ const BattleField = () => {
     increaseEnemyScore();
   }, [result]);
 
-  return (
-    <BattleFieldComponent>
-      <HeadComponent>
-        <ScoreBoard result={playerScore} />
-        <Title>가위바위보</Title>
-        <ScoreBoard result={enemyScore} />
-      </HeadComponent>
+  useEffect(() => {
+    victoryConditions();
+  }, [playerScore]);
 
-      <Result result={result} />
-      <BattleArea>
-        <UserField selectCase={selectCase} />
-        <VS>VS</VS>
-        <EnemyField randomNumber={randomNumber} />
-      </BattleArea>
-      <SelectArea>
-        <SelectButton onClick={clickScissors} img={SCISSORS_IMG} />
-        <SelectButton onClick={clickRock} img={ROCK_IMG} />
-        <SelectButton onClick={clickPaper} img={PAPER_IMG} />
-      </SelectArea>
-    </BattleFieldComponent>
+  useEffect(() => {
+    loseConditions();
+  }, [enemyScore]);
+
+  return (
+    <>
+      <BattleFieldComponent>
+        <HeadComponent>
+          <ScoreBoard result={playerScore} />
+          <Title>가위바위보</Title>
+          <ScoreBoard result={enemyScore} />
+        </HeadComponent>
+
+        <Result result={result} />
+        <BattleArea>
+          <UserField selectCase={selectCase} />
+          <VS>VS</VS>
+          <EnemyField randomNumber={randomNumber} />
+        </BattleArea>
+        <SelectArea>
+          <SelectButton onClick={clickScissors} img={SCISSORS_IMG} />
+          <SelectButton onClick={clickRock} img={ROCK_IMG} />
+          <SelectButton onClick={clickPaper} img={PAPER_IMG} />
+        </SelectArea>
+        {popUp ? <Conditions conditions={conditions} clickExitBtn={clickExitBtn} /> : null}
+      </BattleFieldComponent>
+    </>
   );
 };
 

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { ROCK_IMG, PAPER_IMG, SCISSORS_IMG, DEFAULT_IMG } from "../../constants/constants";
 
-const EnemyField = ({ randomNumber }) => {
+const EnemyField = ({ enemySelect }) => {
   // styled-components
 
   const EnemyFieldComponent = styled.div`
@@ -19,7 +19,7 @@ const EnemyField = ({ randomNumber }) => {
   // event
 
   function setPhoto() {
-    switch (randomNumber) {
+    switch (enemySelect) {
       case 0:
         return SCISSORS_IMG;
         break;

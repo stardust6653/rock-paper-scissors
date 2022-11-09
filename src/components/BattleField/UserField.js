@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { ROCK_IMG, PAPER_IMG, SCISSORS_IMG, DEFAULT_IMG } from "../../constants/constants";
 
-const UserField = ({ selectCase }) => {
+const UserField = ({ playerSelect }) => {
   // styled-components
 
   const UserFieldComponent = styled.div`
@@ -20,7 +20,7 @@ const UserField = ({ selectCase }) => {
   // event
 
   function setPhoto() {
-    switch (selectCase) {
+    switch (playerSelect) {
       case 0:
         return SCISSORS_IMG;
         break;

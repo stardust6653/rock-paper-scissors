@@ -63,8 +63,8 @@ const BattleField = () => {
 
   // state
 
-  const [selectCase, setSelectCase] = useState(3);
-  const [randomNumber, setRandomNumber] = useState(3);
+  const [playerSelect, setPlayerSelect] = useState(3);
+  const [enemySelect, setEnemySelect] = useState(3);
   const [result, setResult] = useState("안내면 진다!");
   const [playerScore, setPlayerScore] = useState(0);
   const [enemyScore, setEnemyScore] = useState(0);
@@ -74,24 +74,24 @@ const BattleField = () => {
   // 이벤트 설정
 
   useEffect(() => {
-    if (selectCase !== 3 && selectCase === randomNumber) {
+    if (playerSelect !== 3 && playerSelect === enemySelect) {
       setResult("무승부!");
-    } else if (selectCase === 0 && randomNumber === 2) {
+    } else if (playerSelect === 0 && enemySelect === 2) {
       setResult("플레이어 승!");
-    } else if (selectCase === 0 && randomNumber === 1) {
+    } else if (playerSelect === 0 && enemySelect === 1) {
       setResult("컴퓨터 승!");
-    } else if (selectCase === 1 && randomNumber === 0) {
+    } else if (playerSelect === 1 && enemySelect === 0) {
       setResult("플레이어 승!");
-    } else if (selectCase === 1 && randomNumber === 2) {
+    } else if (playerSelect === 1 && enemySelect === 2) {
       setResult("컴퓨터 승!");
-    } else if (selectCase === 2 && randomNumber === 1) {
+    } else if (playerSelect === 2 && enemySelect === 1) {
       setResult("플레이어 승!");
-    } else if (selectCase === 2 && randomNumber === 0) {
+    } else if (playerSelect === 2 && enemySelect === 0) {
       setResult("컴퓨터 승!");
-    } else if (selectCase === 3 && randomNumber === 3) {
+    } else if (playerSelect === 3 && enemySelect === 3) {
       setResult("안내면 진다!");
     }
-  }, [selectCase, randomNumber]);
+  }, [playerSelect, enemySelect]);
 
   // score 함수
 
@@ -128,22 +128,22 @@ const BattleField = () => {
   // 이벤트 핸들러
 
   function clickScissors() {
-    setSelectCase(0);
-    setRandomNumber(parseInt(Math.random() * 1000) % 3);
+    setPlayerSelect(0);
+    setEnemySelect(parseInt(Math.random() * 1000) % 3);
   }
   function clickRock() {
-    setSelectCase(1);
-    setRandomNumber(parseInt(Math.random() * 1000) % 3);
+    setPlayerSelect(1);
+    setEnemySelect(parseInt(Math.random() * 1000) % 3);
   }
 
   function clickPaper() {
-    setSelectCase(2);
-    setRandomNumber(parseInt(Math.random() * 1000) % 3);
+    setPlayerSelect(2);
+    setEnemySelect(parseInt(Math.random() * 1000) % 3);
   }
 
   function clickExitBtn() {
-    setSelectCase(3);
-    setRandomNumber(3);
+    setPlayerSelect(3);
+    setEnemySelect(3);
     setPopUp(false);
     setPlayerScore(0);
     setEnemyScore(0);
@@ -178,9 +178,9 @@ const BattleField = () => {
 
         <Result result={result} />
         <BattleArea>
-          <UserField selectCase={selectCase} />
+          <UserField playerSelect={playerSelect} />
           <VS>VS</VS>
-          <EnemyField randomNumber={randomNumber} />
+          <EnemyField enemySelect={enemySelect} />
         </BattleArea>
         <SelectArea>
           <SelectButton onClick={clickScissors} img={SCISSORS_IMG} />

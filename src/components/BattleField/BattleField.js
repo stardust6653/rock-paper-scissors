@@ -75,15 +75,11 @@ const BattleField = () => {
   // score 함수
 
   function increasePlayerScore() {
-    if (result === "플레이어 승!" || result === "플레이어 승!!" || result === "플레이어 승!!!") {
-      setPlayerScore(playerScore + 1);
-    }
+    setPlayerScore(playerScore + 1);
   }
 
   function increaseEnemyScore() {
-    if (result === "컴퓨터 승!" || result === "컴퓨터 승!!" || result === "컴퓨터 승!!!") {
-      setEnemyScore(enemyScore + 1);
-    }
+    setEnemyScore(enemyScore + 1);
   }
 
   // 승리 조건 함수
@@ -127,25 +123,26 @@ const BattleField = () => {
       setResult("무승부!");
     } else if (playerSelect === 0 && enemySelect === 2) {
       setResult("플레이어 승!!");
+      increasePlayerScore();
     } else if (playerSelect === 0 && enemySelect === 1) {
       setResult("컴퓨터 승!");
+      increaseEnemyScore();
     } else if (playerSelect === 1 && enemySelect === 0) {
       setResult("플레이어 승!");
+      increasePlayerScore();
     } else if (playerSelect === 1 && enemySelect === 2) {
       setResult("컴퓨터 승!!");
+      increaseEnemyScore();
     } else if (playerSelect === 2 && enemySelect === 1) {
       setResult("플레이어 승!!!");
+      increasePlayerScore();
     } else if (playerSelect === 2 && enemySelect === 0) {
       setResult("컴퓨터 승!!!");
+      increaseEnemyScore();
     } else if (playerSelect === 3 && enemySelect === 3) {
       setResult("안내면 진다!");
     }
-  });
-
-  useEffect(() => {
-    increasePlayerScore();
-    increaseEnemyScore();
-  }, [result]);
+  }, [round]);
 
   useEffect(() => {
     victoryConditions();

@@ -70,39 +70,18 @@ const BattleField = () => {
   const [enemyScore, setEnemyScore] = useState(0);
   const [conditions, setConditions] = useState("");
   const [popUp, setPopUp] = useState(false);
-
-  // 이벤트 설정
-
-  useEffect(() => {
-    if (playerSelect !== 3 && playerSelect === enemySelect) {
-      setResult("무승부!");
-    } else if (playerSelect === 0 && enemySelect === 2) {
-      setResult("플레이어 승!");
-    } else if (playerSelect === 0 && enemySelect === 1) {
-      setResult("컴퓨터 승!");
-    } else if (playerSelect === 1 && enemySelect === 0) {
-      setResult("플레이어 승!");
-    } else if (playerSelect === 1 && enemySelect === 2) {
-      setResult("컴퓨터 승!");
-    } else if (playerSelect === 2 && enemySelect === 1) {
-      setResult("플레이어 승!");
-    } else if (playerSelect === 2 && enemySelect === 0) {
-      setResult("컴퓨터 승!");
-    } else if (playerSelect === 3 && enemySelect === 3) {
-      setResult("안내면 진다!");
-    }
-  }, [playerSelect, enemySelect]);
+  const [round, setRound] = useState(0);
 
   // score 함수
 
   function increasePlayerScore() {
-    if (result === "플레이어 승!") {
+    if (result === "플레이어 승!" || result === "플레이어 승!!" || result === "플레이어 승!!!") {
       setPlayerScore(playerScore + 1);
     }
   }
 
   function increaseEnemyScore() {
-    if (result === "컴퓨터 승!") {
+    if (result === "컴퓨터 승!" || result === "컴퓨터 승!!" || result === "컴퓨터 승!!!") {
       setEnemyScore(enemyScore + 1);
     }
   }
@@ -128,6 +107,7 @@ const BattleField = () => {
   function clickHandler(type) {
     setPlayerSelect(type);
     setEnemySelect(parseInt(Math.random() * 1000) % 3);
+    setRound(round + 1);
   }
 
   function clickExitBtn() {
@@ -136,15 +116,34 @@ const BattleField = () => {
     setPopUp(false);
     setPlayerScore(0);
     setEnemyScore(0);
+    setRound(0);
   }
 
   // useEffect
 
+  // 승리조건은 하드 코딩 외 방법이 없는건가..?
   useEffect(() => {
-    increasePlayerScore();
-  }, [result]);
+    if (playerSelect !== 3 && playerSelect === enemySelect) {
+      setResult("무승부!");
+    } else if (playerSelect === 0 && enemySelect === 2) {
+      setResult("플레이어 승!!");
+    } else if (playerSelect === 0 && enemySelect === 1) {
+      setResult("컴퓨터 승!");
+    } else if (playerSelect === 1 && enemySelect === 0) {
+      setResult("플레이어 승!");
+    } else if (playerSelect === 1 && enemySelect === 2) {
+      setResult("컴퓨터 승!!");
+    } else if (playerSelect === 2 && enemySelect === 1) {
+      setResult("플레이어 승!!!");
+    } else if (playerSelect === 2 && enemySelect === 0) {
+      setResult("컴퓨터 승!!!");
+    } else if (playerSelect === 3 && enemySelect === 3) {
+      setResult("안내면 진다!");
+    }
+  });
 
   useEffect(() => {
+    increasePlayerScore();
     increaseEnemyScore();
   }, [result]);
 
@@ -159,6 +158,7 @@ const BattleField = () => {
   return (
     <>
       <BattleFieldComponent>
+        {round === 0 ? <span>게임 준비!</span> : <span>round {round}</span>}
         <HeadComponent>
           <ScoreBoard result={playerScore} />
           <Title>가위바위보</Title>

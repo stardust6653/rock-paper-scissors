@@ -5,6 +5,7 @@ import SelectButton from "./SelectButton";
 import UserField from "./UserField";
 import { ROCK_IMG, PAPER_IMG, SCISSORS_IMG, DEFAULT_IMG } from "../../constants/constants";
 import Result from "./Result";
+import ScoreBoard from "./ScoreBoard";
 
 const BattleField = () => {
   // styled-components
@@ -19,8 +20,12 @@ const BattleField = () => {
     height: 50rem;
   `;
 
+  const HeadComponent = styled.div`
+    display: flex;
+  `;
+
   const Title = styled.h1`
-    margin: 0 0 1rem;
+    margin: 0 2rem 1rem;
     font-size: 4rem;
   `;
 
@@ -49,14 +54,16 @@ const BattleField = () => {
 
   // state
 
-  const [selectCase, setSelectCase] = useState();
-  const [randomNumber, setRandomNumber] = useState();
+  const [selectCase, setSelectCase] = useState(3);
+  const [randomNumber, setRandomNumber] = useState(3);
   const [result, setResult] = useState("안내면 진다!");
+  const [playerScore, setPlayerScore] = useState(0);
+  const [enemyScore, setEnemyScore] = useState(0);
 
   // 이벤트 설정
 
   useEffect(() => {
-    if (selectCase === randomNumber) {
+    if (selectCase !== 3 && selectCase === randomNumber) {
       setResult("무승부!");
     } else if (selectCase === 0 && randomNumber === 2) {
       setResult("플레이어 승!");
@@ -70,15 +77,30 @@ const BattleField = () => {
       setResult("플레이어 승!");
     } else if (selectCase === 2 && randomNumber === 0) {
       setResult("컴퓨터 승!");
+    } else if (selectCase === 3 && randomNumber === 3) {
+      setResult("안내면 진다!");
     }
   }, [selectCase, randomNumber]);
+
+  // score 함수
+
+  function increasePlayerScore() {
+    if (result === "플레이어 승!") {
+      setPlayerScore(playerScore + 1);
+    }
+  }
+
+  function increaseEnemyScore() {
+    if (result === "컴퓨터 승!") {
+      setEnemyScore(enemyScore + 1);
+    }
+  }
+
+  // 이벤트 핸들러
 
   function clickScissors() {
     setSelectCase(0);
     setRandomNumber(parseInt(Math.random() * 1000) % 3);
-    console.log("select :", selectCase);
-    console.log("random :", randomNumber);
-    console.log(selectCase === randomNumber);
   }
   function clickRock() {
     setSelectCase(1);
@@ -90,9 +112,24 @@ const BattleField = () => {
     setRandomNumber(parseInt(Math.random() * 1000) % 3);
   }
 
+  // useEffect
+
+  useEffect(() => {
+    increasePlayerScore();
+  }, [result]);
+
+  useEffect(() => {
+    increaseEnemyScore();
+  }, [result]);
+
   return (
     <BattleFieldComponent>
-      <Title>가위바위보</Title>
+      <HeadComponent>
+        <ScoreBoard result={playerScore} />
+        <Title>가위바위보</Title>
+        <ScoreBoard result={enemyScore} />
+      </HeadComponent>
+
       <Result result={result} />
       <BattleArea>
         <UserField selectCase={selectCase} />

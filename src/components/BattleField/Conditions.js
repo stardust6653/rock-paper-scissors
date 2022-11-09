@@ -28,10 +28,12 @@ const ExitBtn = styled.button`
 
 function Conditions({ conditions, clickExitBtn }) {
   return (
-    <PopUp>
-      <ExitBtn onClick={clickExitBtn}>X</ExitBtn>
-      <div>{conditions}</div>
-    </PopUp>
+    <>
+      <PopUp>
+        <ExitBtn onClick={clickExitBtn}>X</ExitBtn>
+        <div>{conditions}</div>
+      </PopUp>
+    </>
   );
 }
 

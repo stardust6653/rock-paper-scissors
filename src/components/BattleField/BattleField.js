@@ -54,6 +54,13 @@ const BattleField = () => {
     border: 1px solid black;
   `;
 
+  const AllScreen = styled.div`
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.01);
+    position: absolute;
+  `;
+
   // state
 
   const [selectCase, setSelectCase] = useState(3);
@@ -180,6 +187,7 @@ const BattleField = () => {
           <SelectButton onClick={clickRock} img={ROCK_IMG} />
           <SelectButton onClick={clickPaper} img={PAPER_IMG} />
         </SelectArea>
+        {popUp ? <AllScreen /> : null}
         {popUp ? <Conditions conditions={conditions} clickExitBtn={clickExitBtn} /> : null}
       </BattleFieldComponent>
     </>

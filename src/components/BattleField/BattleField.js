@@ -115,33 +115,44 @@ const BattleField = () => {
     setRound(0);
   }
 
-  // useEffect
+  // 승패 조건
 
-  // 승리조건은 하드 코딩 외 방법이 없는건가..?
-  useEffect(() => {
-    if (playerSelect !== 3 && playerSelect === enemySelect) {
-      setResult("무승부!");
-    } else if (playerSelect === 0 && enemySelect === 2) {
+  function playerVictoryConditions() {
+    if (
+      (playerSelect === 0 && enemySelect === 2) ||
+      (playerSelect === 1 && enemySelect === 0) ||
+      (playerSelect === 2 && enemySelect === 1)
+    ) {
       setResult("플레이어 승!!");
       increasePlayerScore();
-    } else if (playerSelect === 0 && enemySelect === 1) {
+    }
+  }
+
+  function enemyVictoryConditions() {
+    if (
+      (playerSelect === 0 && enemySelect === 1) ||
+      (playerSelect === 1 && enemySelect === 2) ||
+      (playerSelect === 2 && enemySelect === 0)
+    ) {
       setResult("컴퓨터 승!");
       increaseEnemyScore();
-    } else if (playerSelect === 1 && enemySelect === 0) {
-      setResult("플레이어 승!");
-      increasePlayerScore();
-    } else if (playerSelect === 1 && enemySelect === 2) {
-      setResult("컴퓨터 승!!");
-      increaseEnemyScore();
-    } else if (playerSelect === 2 && enemySelect === 1) {
-      setResult("플레이어 승!!!");
-      increasePlayerScore();
-    } else if (playerSelect === 2 && enemySelect === 0) {
-      setResult("컴퓨터 승!!!");
-      increaseEnemyScore();
+    }
+  }
+
+  function drawConditions() {
+    if (playerSelect !== 3 && playerSelect === enemySelect) {
+      setResult("무승부!");
     } else if (playerSelect === 3 && enemySelect === 3) {
       setResult("안내면 진다!");
     }
+  }
+
+  // useEffect
+
+  useEffect(() => {
+    playerVictoryConditions();
+    enemyVictoryConditions();
+    drawConditions();
   }, [round]);
 
   useEffect(() => {

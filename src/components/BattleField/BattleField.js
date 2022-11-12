@@ -3,7 +3,7 @@ import styled from "styled-components";
 import EnemyField from "./EnemyField";
 import SelectButton from "./SelectButton";
 import UserField from "./UserField";
-import { ROCK_IMG, PAPER_IMG, SCISSORS_IMG } from "../../constants/constants";
+import { ROCK_IMG, PAPER_IMG, SCISSORS_IMG, VICTORY_CONDITIONS } from "../../constants/constants";
 import Result from "./Result";
 import ScoreBoard from "./ScoreBoard";
 import Conditions from "./Conditions";
@@ -146,14 +146,14 @@ const BattleField = () => {
   // 승리 시 출력 함수
 
   function victoryConditions() {
-    if (playerScore === 3) {
+    if (playerScore === VICTORY_CONDITIONS) {
       setConditions("Player가 승리했습니다.");
       setPopUp(true);
     }
   }
 
   function loseConditions() {
-    if (enemyScore === 3) {
+    if (enemyScore === VICTORY_CONDITIONS) {
       setConditions("Player가 패배했습니다.");
       setPopUp(true);
     }

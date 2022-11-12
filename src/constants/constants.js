@@ -8,3 +8,5 @@ export const PAPER_IMG =
   "https://thumb.silhouette-ac.com/t/26/2654adfd65b6ca4a8ac25a9f727d2262_w.jpeg";
 
 export const DEFAULT_IMG = "https://thumb.photo-ac.com/db/dbb9965f47e7a72ad982fce30b5322c1_w.jpeg";
+
+export const VICTORY_CONDITIONS = 3;

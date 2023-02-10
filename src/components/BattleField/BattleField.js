@@ -175,6 +175,7 @@ const BattleField = () => {
     setPlayerScore(0);
     setEnemyScore(0);
     setRound(0);
+    setCount(0);
     localStorage.clear();
   }
 
